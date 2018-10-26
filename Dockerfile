@@ -17,9 +17,9 @@ FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /appr
 COPY --from=build-env /app/out .
 
-ENTRYPOINT cat cfg.json \
-&& sed -i 's/key2/'"$YKEY"'/g' cfg.json \
+# cat cfg.json \ &&
+ENTRYPOINT  sed -i 's/key2/'"$YKEY"'/g' cfg.json \
 && sed -i 's/"telegramKey": "key"/"telegramKey": "'$TKEY'"/g' cfg.json \
-&& cat cfg.json \
+# && cat cfg.json \
 && dotnet  convert_audio_message_to_text__bot.dll
 #ENTRYPOINT ["dotnet", "convert_audio_message_to_text__bot.dll"]
