@@ -19,5 +19,3 @@ deploy:
     - docker ps -a
   only:
     - master
-	
-	
