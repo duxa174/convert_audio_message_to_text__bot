@@ -1,4 +1,5 @@
-﻿{
-  "telegramKey": "key",
-  "YandexSpeechKitKey": "key2"
+{
+  "telegramKey": "key1",
+  "YandexSpeechKitKey": "key2",
+  "logBack": "key3"
 }
