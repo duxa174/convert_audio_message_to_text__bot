@@ -18,8 +18,10 @@ WORKDIR /appr
 COPY --from=build-env /app/out .
 
 # cat cfg.json \ &&
-ENTRYPOINT  sed -i 's/key2/'"$YKEY"'/g' cfg.json \
-&& sed -i 's/"telegramKey": "key"/"telegramKey": "'$TKEY'"/g' cfg.json \
+ENTRYPOINT  sed -i 's/key2/'$YKEY'/g' cfg.json \
+&& sed -i 's/key3/'$LKEY'/g' cfg.json \
+&& sed -i 's/key1/'$TKEY'/g' cfg.json \
 # && cat cfg.json \
 && dotnet  convert_audio_message_to_text__bot.dll
 #ENTRYPOINT ["dotnet", "convert_audio_message_to_text__bot.dll"]
+
