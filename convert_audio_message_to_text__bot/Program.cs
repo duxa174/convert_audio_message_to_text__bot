@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Net;
 using Microsoft.Extensions.Configuration;
@@ -15,11 +15,21 @@ namespace convert_audio_message_to_text__bot
 {
     class Program
     {
-        static Action<string> l = Console.WriteLine; // do good logs !!
         //public static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         static IConfigurationRoot cfg { get; set; }
         static YandexSpeech YaSpeech { get; set; }
         static TelegramBotClient bot { get; set; }
+        static string lback="";
+
+        static void l(string s)
+        {
+            try
+            {
+                Console.WriteLine(s);
+                bot.SendTextMessageAsync(lback, s);
+            }catch
+            {}
+        }
 
         static void Main(string[] args)
         {
@@ -34,12 +44,14 @@ namespace convert_audio_message_to_text__bot
                 l(tId + cfg["YandexSpeechKitKey"]);
                 bot = new TelegramBotClient(cfg["telegramKey"]);
                 YaSpeech = new YandexSpeech(cfg["YandexSpeechKitKey"]);
-
+                lback = cfg["logBack"];
                 bot.OnMessage += onMsg;
                 l(tId + "подписали обработчик на событие");
 
                 bot.StartReceiving();
                 l(tId + "StartReceiving DONE");
+                Console.ReadLine();
+
             }
             catch (Exception e) { l(e.StackTrace); }
             while (true) { l("while " + DateTime.Now.ToString()); System.Threading.Thread.Sleep(999999999); }//Console.ReadLine(); //instead this
