@@ -10,12 +10,13 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using System.Threading;
+using NLog;
 
 namespace convert_audio_message_to_text__bot
 {
     class Program
     {
-        //public static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
+        public static Logger log = LogManager.GetCurrentClassLogger();
         static IConfigurationRoot cfg { get; set; }
         static YandexSpeech YaSpeech { get; set; }
         static TelegramBotClient bot { get; set; }
@@ -33,6 +34,9 @@ namespace convert_audio_message_to_text__bot
 
         static void Main(string[] args)
         {
+            log.Error("log tested and works!!!");
+            //NLog.Telegram.NetStandart
+
             Console.WriteLine("Initialization");
 
             var builder = new ConfigurationBuilder().AddJsonFile("cfg.json");
