@@ -7,6 +7,7 @@
     - docker run --rm -it -e TKEY=123 -e YKEY=321 g3
             - where TKEY=TelegramKey from BotFather
             - and YKEY=SpeechKitCloudKey from https://tech.yandex.ru/speechkit/cloud or https://developer.tech.yandex.ru/keys
+            - and LKEY=your "telegram chat id" for easy logs
 ### both keys are free for noncommercial purposes(SpeechKitCloudKey).
 
 ###### i use
