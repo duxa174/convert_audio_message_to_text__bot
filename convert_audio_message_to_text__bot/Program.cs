@@ -19,16 +19,20 @@ namespace convert_audio_message_to_text__bot
         static IConfigurationRoot cfg { get; set; }
         static YandexSpeech YaSpeech { get; set; }
         static TelegramBotClient bot { get; set; }
-        static string lback="";
-
+        static string lback = "";
+        static int lBackMessageId = 0;
         static void l(string s)
         {
             try
             {
                 Console.WriteLine(s);
-                bot.SendTextMessageAsync(lback, s);
-            }catch
-            {}
+                if (lBackMessageId == 0)
+                    lBackMessageId = bot.SendTextMessageAsync(lback, s).Result.MessageId;
+
+                bot.EditMessageTextAsync(lback, lBackMessageId, s);
+            }
+            catch
+            { }
         }
 
         static void Main(string[] args)
@@ -160,7 +164,7 @@ namespace convert_audio_message_to_text__bot
 
             if (index == -1)//если несколько вариантов текста
             {
-                Console.WriteLine(responseToString);
+                l(responseToString);
                 return "";
             }
             return responseToString;
