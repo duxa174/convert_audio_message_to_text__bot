@@ -164,7 +164,7 @@ namespace convert_audio_message_to_text__bot
 
             if (index == -1)//если несколько вариантов текста
             {
-                l(responseToString);
+                Console.WriteLine(responseToString);
                 return "";
             }
             return responseToString;
