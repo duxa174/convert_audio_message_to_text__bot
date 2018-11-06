@@ -14,6 +14,8 @@ deploy:
   script:
     - docker stop conv && docker rm conv || true || cd
     - docker build . -t g3
+    # -e LKEY=$CI_LOG_BACK_TG_ID is optional
+    # -e Test1=$CI_pub_test -e Test2=$CI_prv_test is just for me (test gitlab vars)
     - docker run  --name conv --restart unless-stopped  -d  -e Test1=$CI_pub_test -e Test2=$CI_prv_test  -e TKEY=$CI_TELEGRAM_KEY -e TKEY=$CI_TELEGRAM_KEY -e YKEY=$CI_YANDEX_SPEECH_KEY -e LKEY=$CI_LOG_BACK_TG_ID  g3
     
     - docker logs conv # keys might be
