@@ -14,6 +14,7 @@ namespace convert_audio_message_to_text__bot.Services
     {//cfg = builder.Build();
 
         public IConfigurationRoot cfg { get; set; }
+
         public Settings() => cfg = new ConfigurationBuilder().AddJsonFile("cfg.json").Build();
     }
 

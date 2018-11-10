@@ -23,10 +23,10 @@ namespace convert_audio_message_to_text__bot.Services
         public string PostMethod(Stream fs, string mimeType)
         {
             string postUrl = "https://asr.yandex.net/asr_xml?" +
-            "uuid=" + System.Guid.NewGuid().ToString() + "&" +
+            "uuid=" + System.Guid.NewGuid().ToString().Replace("-", "") + "&" +
             "key=" + KEY + "&" +
             "topic=queries";
-            postUrl = "https://asr.yandex.net/asr_xml?uuid=c3d106c898d0433c80e7a791b790357d&key=41060ed1-38cf-4953-ba62-b36c1b9cbf52&topic=queries";
+            //postUrl = "https://asr.yandex.net/asr_xml?uuid=c3d106c898d0433c80e7a791b790357d&key=41060ed1-38cf-4953-ba62-b36c1b9cbf52&topic=queries";
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(postUrl);
             request.Method = "POST";
@@ -48,12 +48,13 @@ namespace convert_audio_message_to_text__bot.Services
                 var strreader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8);
                 responseToString = strreader.ReadToEnd();
             }
+            tgLog.l(responseToString);
 
             int index = responseToString.IndexOf("<variant confidence=\"");
             if (index == -1)
             {
-                var badUser = responseToString.IndexOf("success=\"0\"")>1;
-                if(!badUser) // it means smth wrong
+                var badUser = responseToString.IndexOf("success=\"0\"") > 1;
+                if (!badUser) // it means smth wrong
                     tgLog.l(responseToString);
                 return "";
             }
