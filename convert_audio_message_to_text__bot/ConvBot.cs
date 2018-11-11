@@ -17,11 +17,11 @@ namespace convert_audio_message_to_text__bot
     {
         //public static NLog.Logger log = NLog.LogManager.GetCurrentClassLogger();
         //IConfigurationRoot cfg { get; set; }
-        YandexSpeech YaSpeech { get; set; }
+        IStt YaSpeech { get; set; }
         TelegramBotClient bot { get; set; }
         TgLog tgLog { get; set; }
 
-        public ConvBot(TelegramProvider b,TgLog l,YandexSpeech speech)
+        public ConvBot(TelegramProvider b,TgLog l,IStt speech)
         {
             bot = b.bot;
             tgLog = l;

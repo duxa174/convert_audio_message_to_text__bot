@@ -15,7 +15,9 @@ namespace convert_audio_message_to_text__bot
             .AddSingleton<TelegramProvider>()
             .AddSingleton<TgLog>()
             .AddSingleton<ConvBot>()
-            .AddSingleton<YandexSpeech>()
+            //.AddSingleton<YandexSpeech>()
+            .AddSingleton<IStt,WitAiSpeech>()
+
             .BuildServiceProvider();
 
             var InstanceOfBot = serv.GetService<ConvBot>();

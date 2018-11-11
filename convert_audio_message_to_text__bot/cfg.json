@@ -1,5 +1,6 @@
 {
   "telegramKey": "key1",
-  "YandexSpeechKitKey": "key2",
-  "logBack": "key3"
+  "YandexSpeechKitKey": "key2", // speech 1
+  "logBack": "key3",
+  "WitAiKey": "6VNPTXNSZ3YSIXXSRKBP7FD3TQWSGWTD", // or speech 2. DO NOT WORKS
 }

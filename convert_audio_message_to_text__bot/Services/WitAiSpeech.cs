@@ -6,14 +6,14 @@ using System.Text;
 
 namespace convert_audio_message_to_text__bot.Services
 {
-    public class YandexSpeech:IStt
+    public class WitAiSpeech : IStt
     {
         TgLog tgLog { get; set; }
         string KEY = "";
 
-        public YandexSpeech(Settings ss, TgLog tl)
+        public WitAiSpeech(Settings ss, TgLog tl)
         {
-            KEY = ss.cfg["YandexSpeechKitKey"];
+            KEY = ss.cfg["WitAiKey"];
             tgLog = tl;
         }
 
@@ -22,18 +22,19 @@ namespace convert_audio_message_to_text__bot.Services
         /// </summary>
         public string PostMethod(Stream fs, string mimeType)
         {
-            string postUrl = "https://asr.yandex.net/asr_xml?" +
-            "uuid=" + System.Guid.NewGuid().ToString().Replace("-", "") + "&" +
-            "key=" + KEY + "&" +
-            "topic=queries";
+            string postUrl = "https://api.wit.ai/speech?v=20170307";
+            //"uuid=" + System.Guid.NewGuid().ToString().Replace("-", "") + "&" +
+            //"key=" + KEY + "&" +
+            //"topic=queries";
             //postUrl = "https://asr.yandex.net/asr_xml?uuid=c3d106c898d0433c80e7a791b790357d&key=41060ed1-38cf-4953-ba62-b36c1b9cbf52&topic=queries";
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(postUrl);
             request.Method = "POST";
-            request.Host = "asr.yandex.net";
-            request.SendChunked = true;
+            //request.Host = "asr.yandex.net";
+            //request.SendChunked = true;
             request.ContentType = mimeType;//"audio/x-wav";//"audio/x-pcm;bit=16;rate=16000";
-            request.ContentLength = fs.Length;
+            //request.ContentLength = fs.Length;
+            request.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + KEY);
 
             using (var newStream = request.GetRequestStream())
             {
