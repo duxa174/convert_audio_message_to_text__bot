@@ -10,9 +10,14 @@ namespace convert_audio_message_to_text__bot
         static void Main(string[] args)
         {
             Console.WriteLine("Initialization Main");
-            // new ConvBot();
+
+            var rootPath = System.IO.Path.GetPathRoot(AppContext.BaseDirectory);
+            var logDir = System.IO.Path.Combine(rootPath, "logs", "convert_audio_message_to_text__bot");
+            System.IO.Directory.CreateDirectory(logDir);
+            var logPath = System.IO.Path.Combine(logDir, "app.log");
+            //System.IO.File.
             var serv = new ServiceCollection()
-                .AddLogging()
+                .AddLogging(loggingBuilder => loggingBuilder.AddFile(logPath, append: true).AddConsole())
                 .AddSingleton<Settings>()
                 .AddSingleton<TelegramProvider>()
                 .AddSingleton<TgLog>()
@@ -20,8 +25,8 @@ namespace convert_audio_message_to_text__bot
                 .AddSingleton<YandexSpeech>()
                 .BuildServiceProvider();
 
-            serv.GetService<ILoggerFactory>()
-                .AddConsole();
+            //serv.GetService<ILoggerFactory>()
+            //    .AddConsole();
 
             var InstanceOfBot = serv.GetService<ConvBot>();
             InstanceOfBot.Start();
