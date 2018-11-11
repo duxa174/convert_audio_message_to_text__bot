@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Telegram.Bot;
@@ -9,8 +10,10 @@ namespace convert_audio_message_to_text__bot.Services
     {
         TelegramBotClient bot { get; set; }
         string logBackTgId = "";
-        public TgLog(TelegramProvider bp, Settings s)
+        readonly ILogger<TgLog> logger;
+        public TgLog(TelegramProvider bp, Settings s, ILoggerFactory loggerFactory)
         {
+            logger=loggerFactory.CreateLogger<TgLog>(); // 
             bot = bp.bot;
             logBackTgId = s.cfg["logBack"];
             if (string.IsNullOrWhiteSpace(logBackTgId))
@@ -20,7 +23,7 @@ namespace convert_audio_message_to_text__bot.Services
         int lBackMessageId = 0;
         public void l(string s)
         {
-            Console.WriteLine(s);
+            logger.LogInformation(s);
             if (!string.IsNullOrWhiteSpace(logBackTgId))
                 try
                 {
@@ -31,7 +34,7 @@ namespace convert_audio_message_to_text__bot.Services
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    logger.LogError("tg send error: ",e);
                 }
         }
     }
