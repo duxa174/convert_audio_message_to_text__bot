@@ -21,7 +21,7 @@ namespace convert_audio_message_to_text__bot
         TelegramBotClient bot { get; set; }
         TgLog tgLog { get; set; }
 
-        public ConvBot(TelegramProvider b,TgLog l,YandexSpeech speech)
+        public ConvBot(TelegramProvider b, TgLog l, YandexSpeech speech)
         {
             bot = b.bot;
             tgLog = l;
@@ -30,17 +30,17 @@ namespace convert_audio_message_to_text__bot
         public void Start() //ConvBot
         {
             //try
-                var tId = string.Format("{0:d3} init_", Thread.CurrentThread.ManagedThreadId);
-                //l(tId + cfg["telegramKey"]);
-                //l(tId + cfg["YandexSpeechKitKey"]);
-                bot.OnMessage += onMsg;
-                tgLog.l(tId + "подписали обработчик на событие");
+            var tId = string.Format("{0:d3} init_", Thread.CurrentThread.ManagedThreadId);
+            //l(tId + cfg["telegramKey"]);
+            //l(tId + cfg["YandexSpeechKitKey"]);
+            bot.OnMessage += onMsg;
+            tgLog.l(tId + "подписали обработчик на событие");
 
-                bot.StartReceiving();
-                tgLog.l(tId + "StartReceiving DONE");
-                Console.ReadLine();
+            bot.StartReceiving();
+            tgLog.l(tId + "StartReceiving DONE");
+            Console.ReadLine();
             //catch (Exception e) { tgLog.l(e.StackTrace); }
-            while (true) { tgLog.l("while " + DateTime.Now.ToString()); System.Threading.Thread.Sleep(60*1000); }//Console.ReadLine(); //instead this
+            while (true) { tgLog.l("while " + DateTime.Now.ToString()); System.Threading.Thread.Sleep(60 * 1000); }//Console.ReadLine(); //instead this
         }
 
         void onMsg(object obj, MessageEventArgs messageEventArgs)
@@ -62,6 +62,7 @@ namespace convert_audio_message_to_text__bot
                 var YandexMime = MimeConverter.Convert(remoteFile.MimeType);
 
                 textFromVoice = YaSpeech.PostMethod(voice.FileStream, YandexMime);
+                textFromVoice = Process(textFromVoice);
                 bot.SendTextMessageAsync(message.Chat.Id, textFromVoice);
             }
             else if (message.Type == MessageType.DocumentMessage)
@@ -71,9 +72,25 @@ namespace convert_audio_message_to_text__bot
                 var YandexMime = MimeConverter.Convert(remoteFile.MimeType);
 
                 textFromVoice = YaSpeech.PostMethod(docVoice.FileStream, YandexMime);
+                textFromVoice = Process(textFromVoice);
                 bot.SendTextMessageAsync(message.Chat.Id, textFromVoice);
             }
             tgLog.l(tId + textFromVoice);
+        }
+
+
+        static string Process(string str)
+        {
+            str = IsHashTag(str);
+            return str;
+        }
+
+        static string IsHashTag(string str)
+        {
+            Console.WriteLine(str);
+            str = str.Replace("хэштег ", "#");
+            Console.WriteLine(str);
+            return str;
         }
     }
 }
