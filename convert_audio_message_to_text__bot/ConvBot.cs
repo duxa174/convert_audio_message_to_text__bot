@@ -89,9 +89,13 @@ namespace convert_audio_message_to_text__bot
         {
             Console.WriteLine(str);
             str = str.Replace("хэштег ", "#");
+            str = str.Replace("хэштэг ", "#");
             str = str.Replace("хештег ", "#");
+            str = str.Replace("хештэг ", "#");
             str = str.Replace("хэш-тег ", "#");
             str = str.Replace("хеш-тег ", "#");
+            str = str.Replace("хэш-тэг ", "#");
+            str = str.Replace("хеш-тэг ", "#");
             str = str.Replace("hashtag ", "#");
             Console.WriteLine(str);
             return str;
