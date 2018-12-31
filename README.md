@@ -19,6 +19,18 @@ sudo docker run  --name conv --restart unless-stopped  -d   -e TKEY=123123:2131j
 sudo docker logs conv
 ```
 
+###### about nuance asr (create app and get 'appId' and 'appKey')
+```
+ curl "https://dictation.nuancemobility.net:443/NMDPAsrCmdServlet/dictation?appId=NMDPTRIAL_ayasdfli_masd_ru20160209233603&appKey=6sdf3676ba60b3sdfsdfsdf9cacb0e25e9315355a8fsdfsdfd0b782d26c78sdf8fc2094923bc985fbdd3esdfsdf6ac882700ddcff2sdfsdff6547c1csdfsdfaa&id=C4461956B60B"
+ -H "Content-Type: audio/x-wav;codec=pcm;bit=16;rate=8000"
+ -H "Accept-Language: rus-RUS"
+ -H "Accept: application/xml"
+ -k
+ --data-binary @speech3.raw
+ -v
+```
+see more at https://developer.nuance.com/public/index.php?task=prodDev
+
 
 ##### instead of roadmap (my thoughts)
 
