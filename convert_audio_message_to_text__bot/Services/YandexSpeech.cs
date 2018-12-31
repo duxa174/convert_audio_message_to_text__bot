@@ -6,7 +6,7 @@ using System.Text;
 
 namespace convert_audio_message_to_text__bot.Services
 {
-    public class YandexSpeech
+    public class YandexSpeech: ISpeechRecognition
     {
         TgLog tgLog { get; set; }
         string KEY = "";

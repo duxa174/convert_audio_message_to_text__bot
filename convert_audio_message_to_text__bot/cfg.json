@@ -1,5 +1,7 @@
 {
   "telegramKey": "key1",
   "YandexSpeechKitKey": "key2",
-  "logBack": "key3"
+  "logBack": "key3",
+  "NuanceSpeechAppId": "key4",
+  "NuanceSpeechAppKey": "key5"
 }
