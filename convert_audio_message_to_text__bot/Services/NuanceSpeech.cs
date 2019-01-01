@@ -39,13 +39,27 @@ namespace convert_audio_message_to_text__bot.Services
             request.ContentLength = wav.Length;
             using (var newStream = request.GetRequestStream())
                 wav.CopyTo(newStream);
-            wav.Close();//!!!
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
             string responseToString = "";
-            if (response != null)
+            try
             {
-                var strreader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8);
-                responseToString = strreader.ReadLine(); //responseToString = strreader.ReadToEnd();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response != null)
+                {
+                    var strreader = new StreamReader(response.GetResponseStream(), System.Text.Encoding.UTF8);
+                    responseToString = strreader.ReadLine(); //responseToString = strreader.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                tgLog.l("ERR NuanceSpeech GetResponse " + e);
+                using (var dest = File.Create(DateTime.Now.Ticks.ToString()))
+                    fs.CopyTo(dest);
+            }
+            finally
+            {
+                wav.Close();
+                fs.Close();
             }
             tgLog.l(responseToString);
             return responseToString;

@@ -63,6 +63,7 @@ namespace convert_audio_message_to_text__bot
 
                 textFromVoice = YaSpeech.PostMethod(voice.FileStream, YandexMime);
                 textFromVoice = Process(textFromVoice);
+                if (String.IsNullOrWhiteSpace(textFromVoice)) textFromVoice = "#itsempty";
                 bot.SendTextMessageAsync(message.Chat.Id, textFromVoice);
             }
             else if (message.Type == MessageType.DocumentMessage)
