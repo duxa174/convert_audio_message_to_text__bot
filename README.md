@@ -29,7 +29,7 @@ sudo docker logs conv
  --data-binary @speech3.raw
  -v
 ```
-see more at https://developer.nuance.com/public/index.php?task=prodDev
+see more at https://developer.nuance.com/public/index.php?task=prodDev https://stackoverflow.com/questions/44053762/opus-net-c-sharp-encoding
 
 
 ##### instead of roadmap (my thoughts)
