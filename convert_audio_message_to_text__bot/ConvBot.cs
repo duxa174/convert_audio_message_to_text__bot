@@ -37,6 +37,7 @@ namespace convert_audio_message_to_text__bot
             tgLog.l(tId + "подписали обработчик на событие");
 
             bot.StartReceiving();
+            try { tgLog.l("Username= " + bot.GetMeAsync().Result.Username); } catch { }
             tgLog.l(tId + "StartReceiving DONE");
             Console.ReadLine();
             //catch (Exception e) { tgLog.l(e.StackTrace); }

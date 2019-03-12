@@ -55,6 +55,7 @@ namespace convert_audio_message_to_text__bot.Services
                 tgLog.l("ERR NuanceSpeech GetResponse " + e);
                 using (var dest = File.Create(DateTime.Now.Ticks.ToString()))
                     fs.CopyTo(dest);
+                responseToString = "#sorry_error";
             }
             finally
             {

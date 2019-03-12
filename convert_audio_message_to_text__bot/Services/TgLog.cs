@@ -2,10 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Telegram.Bot;
 
 namespace convert_audio_message_to_text__bot.Services
 {
+    /// <summary>
+    ///  в телегу пишет поставив в очередь (в 2сек)
+    /// </summary>
     public class TgLog
     {
         TelegramBotClient bot { get; set; }
@@ -13,17 +17,36 @@ namespace convert_audio_message_to_text__bot.Services
         readonly ILogger<TgLog> logger;
         public TgLog(TelegramProvider bp, Settings s, ILoggerFactory loggerFactory)
         {
-            logger=loggerFactory.CreateLogger<TgLog>(); // 
+            logger = loggerFactory.CreateLogger<TgLog>(); // 
             bot = bp.bot;
             logBackTgId = s.cfg["logBack"];
             if (string.IsNullOrWhiteSpace(logBackTgId))
                 Console.WriteLine("WARN: logs will not be sent to your telegram chat");
+
+            if (!isRunningQueueLogHandler)
+                Task.Run(() =>
+                {
+                    isRunningQueueLogHandler = true;
+                    while (true)
+                    {
+                        Task.Delay(4000);
+                        if (vs.TryDequeue(out string f))
+                            _l(f);
+                    }
+                });
         }
 
-        int lBackMessageId = 0;
+        static bool isRunningQueueLogHandler;
+        static Queue<string> vs = new Queue<string>();
         public void l(string s)
         {
             logger.LogInformation(s);
+            vs.Enqueue(s);
+        }
+
+        int lBackMessageId = 0;
+        private void _l(string s)
+        {
             if (!string.IsNullOrWhiteSpace(logBackTgId))
                 try
                 {
@@ -34,7 +57,7 @@ namespace convert_audio_message_to_text__bot.Services
                 }
                 catch (Exception e)
                 {
-                    logger.LogError("tg send error: ",e);
+                    logger.LogError("tg send error: ", e);
                 }
         }
     }
