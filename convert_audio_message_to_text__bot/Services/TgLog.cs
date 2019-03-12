@@ -44,7 +44,7 @@ namespace convert_audio_message_to_text__bot.Services
             vs.Enqueue(s);
         }
 
-        int lBackMessageId = 0;
+        static int lBackMessageId = 0;
         private void _l(string s)
         {
             if (!string.IsNullOrWhiteSpace(logBackTgId))
