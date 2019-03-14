@@ -24,19 +24,19 @@ namespace convert_audio_message_to_text__bot.Services
                 Console.WriteLine("WARN: logs will not be sent to your telegram chat");
 
             if (!isRunningQueueLogHandler)
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     isRunningQueueLogHandler = true;
                     while (true)
                     {
-                        Task.Delay(4000);
+                        await Task.Delay(4000);
                         if (vs.TryDequeue(out string f))
                             _l(f);
                     }
                 });
         }
 
-        static bool isRunningQueueLogHandler;
+        static bool isRunningQueueLogHandler; // если вдруг не синглтон - useless
         static Queue<string> vs = new Queue<string>();
         public void l(string s)
         {
