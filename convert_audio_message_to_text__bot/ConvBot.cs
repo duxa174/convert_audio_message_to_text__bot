@@ -83,9 +83,10 @@ namespace convert_audio_message_to_text__bot
         static string Process(string str)
         {
             str = IsHashTag(str);
+            str = IsVopros(str);
             return str;
         }
-
+        
         static string IsHashTag(string str)
         {
             Console.WriteLine(str);
@@ -98,6 +99,14 @@ namespace convert_audio_message_to_text__bot
             str = str.Replace("хэш-тэг ", "#");
             str = str.Replace("хеш-тэг ", "#");
             str = str.Replace("hashtag ", "#");
+            Console.WriteLine(str);
+            return str;
+        }
+
+        static string IsVopros(string str)
+        {
+            Console.WriteLine(str);
+            str = str.Replace(" вопрос", " ?");
             Console.WriteLine(str);
             return str;
         }
